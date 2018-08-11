@@ -12,6 +12,13 @@ export default ({ config, db }) => {
 	// perhaps expose some API metadata at the root
 	api.get('/getdata', (req, res) => {
 		var urlParam = req.query.url;
+
+		//verify that the url is legal
+		if(urlParam.substring(0,4) != "http"){
+			//fix it if its not
+			urlParam = "http://" + urlParam;
+		}
+
 		scrape(urlParam, function(error, metadata){
 			console.log(metadata);
 			res.json({ metadata });
